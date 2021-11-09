@@ -3,7 +3,7 @@ const router = require("express").Router();
 
 //get workouts
 router.get("/api/workouts", async (req, res) => {
-  const workouts = await db.workout.aggregate([
+  const workouts = await db.Workout.aggregate([
     {
       $addFields: {
         totalDuration: {
@@ -12,6 +12,7 @@ router.get("/api/workouts", async (req, res) => {
       },
     },
   ]);
+  s;
   try {
     res.json(workouts);
   } catch {
@@ -20,7 +21,14 @@ router.get("/api/workouts", async (req, res) => {
 });
 
 //create workouts
-router.post("/api/workouts", async (req, res) => {});
+router.post("/api/workouts", async (req, res) => {
+  const newWorkout = await db.Workout.create({});
+  try {
+    res.json(newWorkout);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 //put workout into db
 router.put("/api/workouts/:id", async (req, res) => {});
