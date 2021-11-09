@@ -31,6 +31,17 @@ router.post("/api/workouts", async (req, res) => {
 });
 
 //put workout into db
-router.put("/api/workouts/:id", async (req, res) => {});
+router.put("/api/workouts/:id", async (req, res) => {
+  const updateWorkout = await db.Workout.findOneAndUpdate(
+    { _id: req.params.id },
+    { $push: { exercises: req.body } },
+    { new: true, runValidators: true, returnOriginal: false }
+  );
+  try {
+    res.json(updateWorkout);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 module.exports = router;
